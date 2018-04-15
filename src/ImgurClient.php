@@ -35,16 +35,19 @@ class ImgurClient
                 'image' => $image->getRealPath(),
                 'type'  => 'file'
             ];
+        } else if (filter_var($image, FILTER_VALIDATE_URL)) {
+            $imageData = [
+                'image' => $image,
+                'type'  => 'url'
+            ];
+        } else if (base64_decode($image, true) !== false) {
+            $imageData = [
+                'image' => $image,
+                'type'  => 'base64'
+            ];
         } else {
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
-                $imageData = [
-                    'image' => $image,
-                    'type'  => 'url'
-                ];
-            } else {
-                // This should not happen!!
-                throw new ImgurException('Can not upload image without url or file.');
-            }
+            // This should not happen!!
+            throw new ImgurException('Can not upload image without url or file.');
         }
         $res = $this->client->api('image')->upload($imageData);
         if ($res['success'] === true) {
