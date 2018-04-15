@@ -4,7 +4,7 @@ namespace Vongola\Imgur;
 
 use Illuminate\Support\ServiceProvider;
 
-class UploadServiceProvider extends ServiceProvider
+class ImgurServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
