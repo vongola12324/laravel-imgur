@@ -19,6 +19,7 @@ class ImgurClient
      */
     public function __construct($client_id, $client_secret)
     {
+        //FIXME: 需檢查Client ID和Client secret
         $this->client = new \Imgur\Client();
         $this->client->setOption('client_id', $client_id);
         $this->client->setOption('client_secret', $client_secret);
