@@ -14,7 +14,10 @@
         }
     ],
     "require": {
-        "j0k3r/php-imgur-api-client": "^3.0.0"
+        "j0k3r/php-imgur-api-client": "^3.0.0",
+        "illuminate/support":"^5.0",
+        "illuminate/http": "^5.0",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
         "psr-4": {
@@ -26,7 +29,10 @@
         "laravel": {
             "providers": [
                 "Vongola\\Imgur\\UploadServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Imgur": "Vongola\\Imgur\\Facade"
+            }
         }
     }
 }
