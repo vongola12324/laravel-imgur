@@ -3,6 +3,8 @@
 namespace Vongola\Imgur;
 
 
+use Vongola\Imgur\Facades\ImgurFacade;
+
 class ImgurImage
 {
     protected $data = [];

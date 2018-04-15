@@ -31,10 +31,10 @@
         "component": "package",
         "laravel": {
             "providers": [
-                "Vongola\\Imgur\\UploadServiceProvider"
+                "Vongola\\Imgur\\ImgurServiceProvider"
             ],
             "aliases": {
-                "Imgur": "Vongola\\Imgur\\Facade"
+                "Imgur": "Vongola\\Imgur\\Facades\\ImgurFacade"
             }
         }
     }
