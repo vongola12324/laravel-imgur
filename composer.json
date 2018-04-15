@@ -1,0 +1,32 @@
+{
+    "name": "vongola12324/laravel-imgur",
+    "description": "Imgur client for Laravel",
+    "keywords": [
+        "laravel", "imgur"
+    ],
+    "homepage": "https://github.com/vongola12324/laravel-imgur",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vongola",
+            "email": "vongola12324@coder.tw"
+        }
+    ],
+    "require": {
+        "j0k3r/php-imgur-api-client": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vongola\\Imgur\\": "src/"
+        }
+    },
+    "extra": {
+        "component": "package",
+        "laravel": {
+            "providers": [
+                "Vongola\\Imgur\\UploadServiceProvider"
+            ]
+        }
+    }
+}
