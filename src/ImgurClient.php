@@ -50,12 +50,9 @@ class ImgurClient
             // This should not happen!!
             throw new ImgurException('Can not upload image without url or file.');
         }
+        // FIXME: Should check upload status
         $res = $this->client->api('image')->upload($imageData);
-        if ($res['success'] === true) {
-            return new ImgurImage($res['data']);
-        } else {
-            return false;
-        }
+        return new ImgurImage($res);
     }
 
     /**
