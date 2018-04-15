@@ -5,6 +5,7 @@ namespace Vongola\Imgur;
 
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Vongola\Imgur\Exceptions\ImgurException;
 
 class ImgurClient
@@ -32,8 +33,8 @@ class ImgurClient
     public function upload($image) {
         if ($image instanceof UploadedFile) {
             $imageData = [
-                'image' => $image->getRealPath(),
-                'type'  => 'file'
+                'image' => base64_encode(File::get($image->getPathname())),
+                'type'  => 'base64'
             ];
         } else if (filter_var($image, FILTER_VALIDATE_URL)) {
             $imageData = [
