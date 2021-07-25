@@ -5,13 +5,13 @@ use PHPUnit\Framework\TestCase;
 // FIXME: Add TestCase
 class ImgurTest extends TestCase {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
 
     public function exampleTestCase()
     {
-        $this->assertTrue(1 === 1);
+        $this->assertTrue(true);
     }
 }

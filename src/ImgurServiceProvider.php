@@ -16,6 +16,9 @@ class ImgurServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/imgur.php' => config_path('imgur.php'),
         ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/imgur.php', 'imgur'
+        );
     }
     /**
      * Register the application services.
@@ -23,10 +26,8 @@ class ImgurServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ImgurClient::class, function ($app) {
-            $client_id = $app['config']->get('imgur.client_id');
-            $client_secret = $app['config']->get('imgur.client_secret');
-            return new ImgurClient($client_id, $client_secret);
+        $this->app->bind(Client::class, function ($app) {
+            return new Client();
         });
     }
 }

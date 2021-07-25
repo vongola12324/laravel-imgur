@@ -1,6 +1,6 @@
 {
     "name": "vongola12324/laravel-imgur",
-    "description": "Imgur client for Laravel",
+    "description": "Laravel wrapper for the Imgur API.",
     "keywords": [
         "laravel", "imgur"
     ],
@@ -14,13 +14,14 @@
         }
     ],
     "require": {
-        "j0k3r/php-imgur-api-client": "^3.0.0",
-        "illuminate/support":"^5.0",
-        "illuminate/http": "^5.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "illuminate/support":"^7.0|^8.0",
+        "illuminate/http": "^7.0|^8.0",
+        "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
