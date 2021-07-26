@@ -2,7 +2,6 @@
 
 namespace Vongola\Imgur\HttpClient;
 
-
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -36,14 +35,14 @@ class HttpClient
      */
     protected HandlerStack $stack;
 
-    public function __construct(array $options = [])
+    public function __construct(?GuzzleClient $client = null, array $options = [])
     {
         $this->options = $options;
 
         $this->stack = HandlerStack::create();
         $this->stack->push(ErrorMiddleware::error());
 
-        $this->client = new GuzzleClient(
+        $this->client = $client ?? new GuzzleClient(
             [
                 'base_uri' => $this->options['base_url'],
                 'handler'  => $this->stack,
@@ -166,6 +165,4 @@ class HttpClient
             )
         );
     }
-
-
 }

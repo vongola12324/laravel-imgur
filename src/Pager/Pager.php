@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Vongola\Imgur\Pager;
 
 /**

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- 規則名稱 -->
+<ruleset>
+    <!-- 以PSR12為基礎 -->
+    <rule ref="PSR12"/>
+
+    <!-- 不需要雙引號的字串，不得使用雙引號 -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage">
+        <type>warning</type>
+    </rule>
+    <!-- 允許雙引號字串中出現變數（上述規則會禁止這情況，因此須手動關閉） -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Config, Factory, Migration, Seeder 和 Routes 不需要 Namespace -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>config/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+
+    <file>src</file>
+    <file>config</file>
+    <file>tests</file>
+</ruleset>

@@ -33,7 +33,7 @@ abstract class BaseApi
      * @return mixed
      * @throws GuzzleException
      */
-    protected function get(string $url, array $parameters = [])
+    protected function requestGet(string $url, array $parameters = [])
     {
         if (!empty($this->pager)) {
             $parameters['page'] = $this->pager->getPage();
@@ -51,7 +51,7 @@ abstract class BaseApi
      * @return mixed
      * @throws GuzzleException
      */
-    protected function post(string $url, array $parameters = [])
+    protected function requestPost(string $url, array $parameters = [])
     {
         $response = $this->httpClient->post($url, $parameters);
         return $this->httpClient->parseResponse($response);
@@ -65,12 +65,11 @@ abstract class BaseApi
      * @return mixed
      * @throws GuzzleException
      */
-    protected function put(string $url, array $parameters = [])
+    protected function requestPut(string $url, array $parameters = [])
     {
         $response = $this->httpClient->put($url, $parameters);
         return $this->httpClient->parseResponse($response);
     }
-
     /**
      * Perform a DELETE request and return the parsed response.
      *
@@ -79,7 +78,7 @@ abstract class BaseApi
      * @return mixed
      * @throws GuzzleException
      */
-    protected function delete(string $url, array $parameters = [])
+    protected function requestDelete(string $url, array $parameters = [])
     {
         $response = $this->httpClient->delete($url, $parameters);
         return $this->httpClient->parseResponse($response);

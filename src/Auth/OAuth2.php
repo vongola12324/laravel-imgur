@@ -11,8 +11,8 @@ use function is_array;
 
 class OAuth2
 {
-    const AUTHORIZATION_ENDPOINT = 'https://api.imgur.com/oauth2/authorize';
-    const ACCESS_TOKEN_ENDPOINT = 'https://api.imgur.com/oauth2/token';
+    public const AUTHORIZATION_ENDPOINT = 'https://api.imgur.com/oauth2/authorize';
+    public const ACCESS_TOKEN_ENDPOINT = 'https://api.imgur.com/oauth2/token';
 
     private array $options = [];
     private HttpClient $httpClient;
@@ -38,7 +38,7 @@ class OAuth2
      *
      * @var array
      */
-    private array $token;
+    private array $token = [];
 
     /**
      * Instantiates the OAuth2 class, but does not trigger the authentication process.

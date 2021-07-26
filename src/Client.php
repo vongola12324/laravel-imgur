@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use RuntimeException;
 use Vongola\Imgur\Api\Account;
+use Vongola\Imgur\Api\Album;
 use Vongola\Imgur\Auth\OAuth2;
 use Vongola\Imgur\HttpClient\HttpClient;
 
@@ -14,6 +15,7 @@ use Vongola\Imgur\HttpClient\HttpClient;
  * Class Client
  * @package Vongola\Imgur
  * @method static Account account
+ * @method static Album album
  */
 class Client
 {
@@ -43,11 +45,11 @@ class Client
     /**
      * Client constructor.
      */
-    public function __construct()
+    public function __construct(?HttpClient $httpClient = null, ?OAuth2 $authenticationClient = null)
     {
         $this->loadConfig();
-        $this->httpClient = new HttpClient(Arr::only($this->options, ['base_url']));
-        $this->authenticationClient = new OAuth2(
+        $this->httpClient = $httpClient ?? new HttpClient(null, Arr::only($this->options, ['base_url']));
+        $this->authenticationClient = $authenticationClient ?? new OAuth2(
             $this->httpClient,
             $this->getOption('client_id'),
             $this->getOption('client_secret')
@@ -65,7 +67,7 @@ class Client
 
         $apiClass = 'Vongola\\Imgur\\Api\\' . ucfirst($name);
         if (class_exists($apiClass)) {
-            return new $apiClass($this, $argv);
+            return new $apiClass($this->httpClient, ...$argv);
         }
 
         throw new InvalidArgumentException('API Method not supported: "' . $name . '" (apiClass: "' . $apiClass . '")');
@@ -73,7 +75,7 @@ class Client
 
     public static function __callStatic($name, $argv)
     {
-        return call_user_func(new(static::class), $name, $argv);
+        return call_user_func([new self(), $name], $argv);
     }
 
     private function loadConfig()
@@ -130,8 +132,8 @@ class Client
      *
      * @param string $code
      * @param string $responseType
-     *
      * @return array
+     * @throws GuzzleException
      */
     public function requestAccessToken(string $code, string $responseType = 'code'): array
     {
@@ -141,9 +143,9 @@ class Client
     /**
      * Proxy method for retrieving the access token.
      *
-     * @return array
+     * @return array|null
      */
-    public function getAccessToken(): array
+    public function getAccessToken(): ?array
     {
         return $this->authenticationClient->getAccessToken();
     }
@@ -185,5 +187,21 @@ class Client
     public function sign()
     {
         $this->authenticationClient->sign();
+    }
+
+    /**
+     * @return HttpClient
+     */
+    public function getHttpClient(): HttpClient
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @return OAuth2
+     */
+    public function getAuthenticationClient(): OAuth2
+    {
+        return $this->authenticationClient;
     }
 }

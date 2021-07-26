@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Vongola\Imgur\Middleware;
-
 
 use Psr\Http\Message\RequestInterface;
 

@@ -17,7 +17,8 @@ class ImgurServiceProvider extends ServiceProvider
             __DIR__ . '/../config/imgur.php' => config_path('imgur.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../config/imgur.php', 'imgur'
+            __DIR__ . '/../config/imgur.php',
+            'imgur'
         );
     }
     /**
