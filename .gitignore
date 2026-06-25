@@ -245,6 +245,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,vim,jetbrains,phpunit,phpcodesniffer,laravel
 
+composer.lock
+
 # Superpowers SDD scratch (progress ledger — not source)
 .superpowers/
 docs/design/
