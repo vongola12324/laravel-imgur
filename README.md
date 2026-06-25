@@ -34,6 +34,7 @@ At this time we support the following Apis:
 - Comment (`$imgurClient->comment()`)
 - Gallery (`$imgurClient->gallery()`)
 - Image (`$imgurClient->image()`)
+- Memegen (`$imgurClient->memegen()`)
 
 
 See [Imgur Api Docs](https://apidocs.imgur.com/) for all Api.

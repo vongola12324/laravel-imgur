@@ -10,7 +10,7 @@ updates:
       composer-prod:
         dependency-type: production
     ignore:
-      - dependency-name: laravel/framework
+      - dependency-name: illuminate/support
         update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
