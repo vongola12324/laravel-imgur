@@ -8,6 +8,23 @@ on:
   workflow_call:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Check code style
+        run: vendor/bin/pint --test
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -46,9 +63,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
-
-      - name: Check code style
-        run: vendor/bin/pint --test
 
       - name: Run tests
         run: vendor/bin/phpunit --coverage-text
