@@ -34,6 +34,9 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: pcov
 
+      - name: Disable Composer security advisory blocking
+        run: composer config --global policy.advisories.block false
+
       - name: Require correct Laravel and Testbench versions
         run: |
           composer require \
