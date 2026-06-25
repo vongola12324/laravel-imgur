@@ -7,14 +7,6 @@ use Vongola\Imgur\ImgurServiceProvider;
 
 class TestCase extends BaseTestCase
 {
-    protected bool $loadEnvironmentVariables = true;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        // additional setup
-    }
-
     protected function getPackageProviders($app): array
     {
         return [

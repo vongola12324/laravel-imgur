@@ -1,7 +1,7 @@
 # laravel-imgur
 Laravel wrapper for the Imgur API.  
-Only work for Laravel 7.x (or above) and PHP 7.4 (or above).  
-If you are using older version of Laravel, you should use [j0k3r/php-imgur-api-client](https://github.com/j0k3r/php-imgur-api-client).
+Requires PHP 8.2+ and Laravel 10.x or above.
+Built on top of [j0k3r/php-imgur-api-client](https://github.com/j0k3r/php-imgur-api-client).
 
 ## Installation
 ```
@@ -34,6 +34,7 @@ At this time we support the following Apis:
 - Comment (`$imgurClient->comment()`)
 - Gallery (`$imgurClient->gallery()`)
 - Image (`$imgurClient->image()`)
+- Memegen (`$imgurClient->memegen()`)
 
 
 See [Imgur Api Docs](https://apidocs.imgur.com/) for all Api.
@@ -42,8 +43,6 @@ See [Imgur Api Docs](https://apidocs.imgur.com/) for all Api.
 ## Notice
 1. This project is based on [j0k3r/php-imgur-api-client](https://github.com/j0k3r/php-imgur-api-client).
 2. There are some feature available in j0k3r's version, which do not show in [Imgur Api Docs](https://apidocs.imgur.com/), will not provide in this package.
-3. The test case of this project are still WIP.
-4. It is recommended not to use this project in a formal project (because it has not been officially released yet) unless you understand what you are doing!
 
 ## License
 MIT License

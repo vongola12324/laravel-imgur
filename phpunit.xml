@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false"
-         colors="false" convertErrorsToExceptions="true" convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false"
-         bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
+         colors="true"
+         bootstrap="vendor/autoload.php">
+    <source>
         <include>
             <directory>./src/</directory>
         </include>
-        <exclude>
-            <directory>./tests</directory>
-        </exclude>
+    </source>
+    <coverage>
         <report>
-            <text outputFile="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
+            <text outputFile="php://stdout" showOnlySummary="true"/>
         </report>
     </coverage>
     <testsuites>
