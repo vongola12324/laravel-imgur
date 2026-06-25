@@ -10,12 +10,13 @@ use Imgur\Api\Comment;
 use Imgur\Api\Gallery;
 use Imgur\Api\Image;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Vongola\Imgur\Client as ImgurClient;
 use Vongola\ImgurTests\TestCase;
 
 class ClientTest extends TestCase
 {
-    /** @dataProvider apiClassProvider */
+    #[DataProvider('apiClassProvider')]
     public function test_api_call_returns_correct_instance(string $method, string $expectedClass): void
     {
         $client = new ImgurClient;
