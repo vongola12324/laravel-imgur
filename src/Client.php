@@ -1,207 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Vongola\Imgur;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Arr;
-use InvalidArgumentException;
-use RuntimeException;
-use Vongola\Imgur\Api\Account;
-use Vongola\Imgur\Api\Album;
-use Vongola\Imgur\Auth\OAuth2;
-use Vongola\Imgur\HttpClient\HttpClient;
+use Imgur\Client as ImgurClient;
 
-/**
- * Class Client
- * @package Vongola\Imgur
- * @method static Account account
- * @method static Album album
- */
 class Client
 {
-    /**
-     * Client options
-     * @var array
-     */
-    private array $options = [
-        'base_url'      => 'https://api.imgur.com/3/',
-        'client_id'     => null,
-        'client_secret' => null,
-    ];
+    private ImgurClient $imgur;
 
-    /**
-     * Guzzle-Base HttpClient
-     * @var HttpClient
-     */
-    private HttpClient $httpClient;
-
-    /**
-     * The class handling authentication.
-     *
-     * @var OAuth2
-     */
-    private OAuth2 $authenticationClient;
-
-    /**
-     * Client constructor.
-     */
-    public function __construct(?HttpClient $httpClient = null, ?OAuth2 $authenticationClient = null)
+    public function __construct()
     {
-        $this->loadConfig();
-        $this->httpClient = $httpClient ?? new HttpClient(null, Arr::only($this->options, ['base_url']));
-        $this->authenticationClient = $authenticationClient ?? new OAuth2(
-            $this->httpClient,
-            $this->getOption('client_id'),
-            $this->getOption('client_secret')
-        );
+        $this->imgur = new ImgurClient();
+        $this->imgur->setOption('client_id', config('imgur.client_id'));
+        $this->imgur->setOption('client_secret', config('imgur.client_secret'));
     }
 
-    /**
-     * Call Api
-     */
-    public function __call($name, $argv)
+    public function __call(string $name, array $argv): mixed
     {
-        if (!$this->getAccessToken()) {
-            $this->sign();
-        }
-
-        $apiClass = 'Vongola\\Imgur\\Api\\' . ucfirst($name);
-        if (class_exists($apiClass)) {
-            return new $apiClass($this->httpClient, ...$argv);
-        }
-
-        throw new InvalidArgumentException('API Method not supported: "' . $name . '" (apiClass: "' . $apiClass . '")');
+        return $this->imgur->api($name);
     }
 
-    public static function __callStatic($name, $argv)
+    public static function __callStatic(string $name, array $argv): mixed
     {
-        return call_user_func([new self(), $name], $argv);
+        return (new self())->$name(...$argv);
     }
 
-    private function loadConfig()
-    {
-        if (!config('imgur.client_id') || !config('imgur.client_secret')) {
-            throw new RuntimeException('Client client id or secret is empty.');
-        }
-        $this->setOption('client_id', config('imgur.client_id'));
-        $this->setOption('client_secret', config('imgur.client_secret'));
-    }
-
-    /**
-     * @param string $name
-     * @return string
-     * @throws InvalidArgumentException
-     */
-    public function getOption(string $name): string
-    {
-        if (!array_key_exists($name, $this->options)) {
-            throw new InvalidArgumentException(sprintf('Undefined option called: "%s"', $name));
-        }
-        return $this->options[$name];
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @throws InvalidArgumentException
-     */
-    public function setOption(string $name, $value)
-    {
-        if (!array_key_exists($name, $this->options)) {
-            throw new InvalidArgumentException(sprintf('Undefined option called: "%s"', $name));
-        }
-        $this->options[$name] = $value;
-    }
-
-
-    /**
-     * Proxy method for the authentication objects URL building method.
-     *
-     * @param string $responseType
-     * @param string|null $state
-     *
-     * @return string
-     */
     public function getAuthenticationUrl(string $responseType = 'code', ?string $state = null): string
     {
-        return $this->authenticationClient->getAuthenticationUrl($responseType, $state);
+        return $this->imgur->getAuthenticationUrl($responseType, $state);
     }
 
-    /**
-     * Proxy method for exchanging a code for an access token/a pin for an access token.
-     *
-     * @param string $code
-     * @param string $responseType
-     * @return array
-     * @throws GuzzleException
-     */
     public function requestAccessToken(string $code, string $responseType = 'code'): array
     {
-        return $this->authenticationClient->requestAccessToken($code, $responseType);
+        return $this->imgur->requestAccessToken($code, $responseType);
     }
 
-    /**
-     * Proxy method for retrieving the access token.
-     *
-     * @return array|null
-     */
     public function getAccessToken(): ?array
     {
-        return $this->authenticationClient->getAccessToken();
+        return $this->imgur->getAccessToken();
     }
 
-    /**
-     * Proxy method for checking if the access token expired.
-     *
-     * @return bool
-     */
-    public function checkAccessTokenExpired(): bool
+    public function setAccessToken(array $token): void
     {
-        return $this->authenticationClient->checkAccessTokenExpired();
+        $this->imgur->setAccessToken($token);
     }
 
-    /**
-     * Proxy method for refreshing an access token.
-     *
-     * @return array
-     * @throws GuzzleException
-     */
     public function refreshToken(): array
     {
-        return $this->authenticationClient->refreshToken();
+        return $this->imgur->refreshToken();
     }
 
-    /**
-     * Proxy method for setting an access token.
-     *
-     * @param array $token
-     */
-    public function setAccessToken(array $token)
+    public function checkAccessTokenExpired(): bool
     {
-        $this->authenticationClient->setAccessToken($token);
+        return $this->imgur->checkAccessTokenExpired();
     }
 
-    /**
-     * Proxy method for signing a request.
-     */
-    public function sign()
+    public function sign(): void
     {
-        $this->authenticationClient->sign();
-    }
-
-    /**
-     * @return HttpClient
-     */
-    public function getHttpClient(): HttpClient
-    {
-        return $this->httpClient;
-    }
-
-    /**
-     * @return OAuth2
-     */
-    public function getAuthenticationClient(): OAuth2
-    {
-        return $this->authenticationClient;
+        $this->imgur->sign();
     }
 }
