@@ -12,7 +12,7 @@ class Client
 
     public function __construct()
     {
-        $this->imgur = new ImgurClient();
+        $this->imgur = new ImgurClient;
         $this->imgur->setOption('client_id', config('imgur.client_id'));
         $this->imgur->setOption('client_secret', config('imgur.client_secret'));
     }
@@ -24,7 +24,7 @@ class Client
 
     public static function __callStatic(string $name, array $argv): mixed
     {
-        return (new self())->$name(...$argv);
+        return (new self)->$name(...$argv);
     }
 
     public function getAuthenticationUrl(string $responseType = 'code', ?string $state = null): string

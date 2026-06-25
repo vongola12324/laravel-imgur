@@ -7,7 +7,7 @@ use Vongola\Imgur\ImgurServiceProvider;
 
 class TestCase extends BaseTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // additional setup

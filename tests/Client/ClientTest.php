@@ -16,9 +16,9 @@ use Vongola\ImgurTests\TestCase;
 class ClientTest extends TestCase
 {
     /** @dataProvider apiClassProvider */
-    public function testApiCallReturnsCorrectInstance(string $method, string $expectedClass): void
+    public function test_api_call_returns_correct_instance(string $method, string $expectedClass): void
     {
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $this->assertInstanceOf($expectedClass, $client->$method());
     }
 
@@ -33,44 +33,44 @@ class ClientTest extends TestCase
         ];
     }
 
-    public function testInvalidApiNameThrowsException(): void
+    public function test_invalid_api_name_throws_exception(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $client->doNotExist();
     }
 
-    public function testGetAuthenticationUrlDefault(): void
+    public function test_get_authentication_url_default(): void
     {
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $url = $client->getAuthenticationUrl();
         $this->assertStringContainsString('client_id=123', $url);
         $this->assertStringContainsString('response_type=code', $url);
     }
 
-    public function testGetAuthenticationUrlWithPin(): void
+    public function test_get_authentication_url_with_pin(): void
     {
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $url = $client->getAuthenticationUrl('pin');
         $this->assertStringContainsString('response_type=pin', $url);
     }
 
-    public function testGetAuthenticationUrlWithState(): void
+    public function test_get_authentication_url_with_state(): void
     {
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $url = $client->getAuthenticationUrl('code', 'draft');
         $this->assertStringContainsString('state=draft', $url);
     }
 
-    public function testGetAccessTokenReturnsNullInitially(): void
+    public function test_get_access_token_returns_null_initially(): void
     {
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $this->assertNull($client->getAccessToken());
     }
 
-    public function testCheckAccessTokenExpiredReturnsTrueWhenNoToken(): void
+    public function test_check_access_token_expired_returns_true_when_no_token(): void
     {
-        $client = new ImgurClient();
+        $client = new ImgurClient;
         $this->assertTrue($client->checkAccessTokenExpired());
     }
 }
