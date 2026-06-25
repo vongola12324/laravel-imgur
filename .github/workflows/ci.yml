@@ -18,13 +18,10 @@ jobs:
         include:
           - laravel: '10'
             testbench: '8'
-            phpunit: '10.5'
           - laravel: '11'
             testbench: '9'
-            phpunit: '11.0'
           - laravel: '12'
             testbench: '10'
-            phpunit: '11.0'
 
     name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
 
@@ -45,7 +42,6 @@ jobs:
           composer require \
             "laravel/framework:^${{ matrix.laravel }}.0" \
             "orchestra/testbench:^${{ matrix.testbench }}.0" \
-            "phpunit/phpunit:^${{ matrix.phpunit }}" \
             --no-update --no-interaction
 
       - name: Install dependencies
